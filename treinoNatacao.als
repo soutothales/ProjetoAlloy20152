@@ -2,7 +2,6 @@ module treinoNatacao
 
 sig Aula {
 	alunos:some Aluno
-
 }
 
 sig Aluno{
@@ -30,9 +29,24 @@ fact AlunosFact{
 	--aluno iniciante deve ter 2 ou 3 nados
 	all aluno:AlunoIniciante | (#NadosDoAluno[aluno] = 2 or #NadosDoAluno[aluno] = 3)
 	--aluno avançado deve ter 4 nados e não pode nadar crawl unilateral
-	all aluno:AlunoAvancado | #NadosDoAluno[aluno] = 4
 	all aluno:AlunoAvancado | NadoCrawlUnilateral !in NadosDoAluno[aluno]
+	all aluno:AlunoAvancado | #NadosDoAluno[aluno] = 4
 
+}
+
+fact NadosFact{
+	#NadoCrawlUnilateral = 2
+	#NadoCrawlBilateral = 1
+	#NadoPeito = 1
+	#NadoBorboleta = 1
+	#NadoCostas = 1
+	#NadoPernadaPrancha = 1
+	#NadoPernadaPeDePato = 1
+
+}
+
+fact AulaFact{
+	#Aula = 1
 }
 
 pred AlunoPertenceAula[a:Aluno]{
@@ -40,7 +54,7 @@ pred AlunoPertenceAula[a:Aluno]{
 	
 }
 
-fun NadosDoAluno[a:Aluno]	:set Nado{
+fun NadosDoAluno[a:Aluno] :set Nado{
 	a.nados
 
 }
